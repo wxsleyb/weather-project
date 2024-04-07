@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (cityName) {
             await getWeatherDataByCityName(cityName);
         } else {
-            showAlert(`Por favor, insira o nome da local.
+            showAlert(`Por favor, insira o nome do local.
             <img src="src/img/happy_emoji.png"/>
             `);
         }
