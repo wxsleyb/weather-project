@@ -61,7 +61,7 @@ async function fetchWeatherData(apiURL) {
             <img src="src/img/thinking_emoji.png"/>`);
         }
     } catch (error) {
-        showAlert(`Ocorreu um erro ao buscar os dados do clima.
+        showAlert(`Ocorreu um erro ao buscar os dados do clima, digite um local válido.
         <img src="src/img/thinking_emoji.png"/>`);
     } finally {
         document.getElementById('loading').style.display = 'none';
