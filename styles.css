@@ -206,3 +206,25 @@ body {
     background-color: #2563eb;
 }
 
+@media only screen and (max-width: 1000px) {
+    #container {
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    #temp {
+        padding: 10px;
+    }
+
+    #other_infos {
+        margin-top: 20px;
+    }
+
+    #other_infos .info {
+        padding: 8px;
+    }
+
+    #alert img {
+        width: 150px;
+    }
+}
