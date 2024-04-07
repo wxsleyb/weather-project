@@ -36,12 +36,21 @@ async function fetchWeatherData(apiURL) {
         document.getElementById('loading').style.display = 'block';
         const response = await fetch(apiURL);
         const json = await response.json();
+        const city = await getCityByCoordinates(json.coord.lat, json.coord.lon)
         const state = await getStateByCoordinates(json.coord.lat, json.coord.lon); 
-        
-        json.state = state; 
+        const suburb = await getSuburbByCoordinates(json.coord.lat, json.coord.lon);
+        const rua = await getRuaByCoordinates(json.coord.lat, json.coord.lon)
+        json.city = city
+        json.suburb = suburb; 
+        json.rua = rua;
+        if (!state) {
+            json.state = json.city;
+        } else {
+            json.state = state;
+        }
         if (json.cod === 200) {
             showInfo({
-                city: json.name,
+                city: json.city,
                 country: json.sys.country,
                 temp: json.main.temp,
                 tempMax: json.main.temp_max,
@@ -54,8 +63,11 @@ async function fetchWeatherData(apiURL) {
                 longitude: json.coord.lon,
                 latitude: json.coord.lat,
                 windDirection: json.wind.deg,
-                state: json.state
+                state: json.state,
+                suburb: json.suburb,
+                rua: json.rua
             });
+            console.log(json)
         } else {
             showAlert(`Não foi possível localizar. Verifique se o nome da local está correto.
             <img src="src/img/thinking_emoji.png"/>`);
@@ -66,6 +78,7 @@ async function fetchWeatherData(apiURL) {
     } finally {
         document.getElementById('loading').style.display = 'none';
     }
+    console.log(showInfo())
 }
 
 // Função para obter o estado por coordenadas
@@ -75,9 +88,51 @@ async function getStateByCoordinates(latitude, longitude) {
     try {
         const response = await fetch(nominatimURL);
         const data = await response.json();
-        return data.address.state || "Estado não encontrado";
+        return data.address.state || "não encontrado"
     } catch (error) {
         throw new Error("Erro ao obter o estado.");
+    }
+}
+
+// Função para obter o subúrbio por coordenadas
+async function getSuburbByCoordinates(latitude, longitude) {
+    const nominatimURL = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+    try {
+        const response = await fetch(nominatimURL);
+        const data = await response.json();
+        return data.address.suburb || "não encontrado"
+    } catch (error) {
+        throw new Error("Erro ao obter o subúrbio.");
+    }
+}
+
+// Função para obter a cidade por coordenadas
+
+async function getCityByCoordinates(latitude, longitude) {
+    const nominatimURL = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+    try {
+        const response = await fetch(nominatimURL);
+        const data = await response.json();
+        return data.address.city || "não encontrada";
+    } catch (error) {
+        throw new Error("Erro ao obter o nome da cidade.");
+    }
+}
+
+
+// Função para obter a rua por coordenadas
+
+async function getRuaByCoordinates(latitude, longitude) {
+    const nominatimURL = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+    try {
+        const response = await fetch(nominatimURL);
+        const data = await response.json();
+        return data.address.road || "não encontrada";
+    } catch (error) {
+        throw new Error("Erro ao obter o nome da rua.");
     }
 }
 
@@ -101,8 +156,12 @@ function showAlert(msg) {
 async function showInfo(json) {
     showAlert('')
     document.querySelector('#weather').classList.add('show')
-    document.querySelector('#title').innerHTML = `${json.city}, ${json.country}`
-    document.querySelector('#state').innerHTML = `${json.state}`
+    document.querySelector('#title').innerHTML = `Local: ${json.city}, ${json.country}`
+    document.querySelector('#state').innerHTML = `Estado: ${json.state}`
+    document.querySelector('#suburb').innerHTML = `Subúrbio: ${json.suburb}`
+    document.querySelector('#rua').innerHTML = `Rua: ${json.rua}`
+
+
 
     const countryImg = document.querySelector("#country");
     if (countryImg) {
