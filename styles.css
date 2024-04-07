@@ -16,14 +16,24 @@ body {
     background: linear-gradient(180deg, #5a7cdc 0%, #a50ef1 100%);
 }
 
-#container{
-    background-color: #f0f8ff;
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#container {
+    background-color: rgba(240, 248, 255, 0.5); 
     border-radius: 20px;
     padding: 18px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 90%; 
+    width: 100%;
 }
 
 #search {
@@ -204,27 +214,4 @@ body {
 
 #use_location:hover {
     background-color: #2563eb;
-}
-
-@media only screen and (max-width: 1000px) {
-    #container {
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    #temp {
-        padding: 10px;
-    }
-
-    #other_infos {
-        margin-top: 20px;
-    }
-
-    #other_infos .info {
-        padding: 8px;
-    }
-
-    #alert img {
-        width: 150px;
-    }
 }
