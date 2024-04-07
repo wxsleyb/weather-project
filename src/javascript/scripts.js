@@ -23,7 +23,7 @@ async function getWeatherDataByCoordinates(latitude, longitude) {
     await fetchWeatherData(apiURL, latitude, longitude); 
 }
 
-// Função para obter dados do clima por nome da cidade
+// Função para obter dados do clima por nome da local
 async function getWeatherDataByCityName(cityName) {
     const apiKey = '8a60b2de14f7a17c7a11706b2cfcd87c';
     const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(cityName)}&appid=${apiKey}&units=metric&lang=pt_br`;
@@ -57,11 +57,12 @@ async function fetchWeatherData(apiURL) {
                 state: json.state
             });
         } else {
-            showAlert(`Não foi possível localizar. Verifique se o nome da cidade está correto.
-            <img src="src/img/sad_emoji.webp"/>`);
+            showAlert(`Não foi possível localizar. Verifique se o nome da local está correto.
+            <img src="src/img/thinking_emoji.png"/>`);
         }
     } catch (error) {
-        showAlert('Ocorreu um erro ao buscar os dados do clima.');
+        showAlert(`Ocorreu um erro ao buscar os dados do clima.
+        <img src="src/img/thinking_emoji.png"/>`);
     } finally {
         document.getElementById('loading').style.display = 'none';
     }
@@ -128,7 +129,7 @@ async function showInfo(json) {
     updateTempBackground(json.temp);
 }
 
-// Função para analisar o nome da cidade e o estado
+// Função para analisar o nome da local e o estado
 function parseCityAndState(cityNameAndState) {
     const [cityName, state] = cityNameAndState.trim().split(/\s+/);
     return [cityName, state.toUpperCase()];
@@ -171,12 +172,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const { latitude, longitude } = position.coords;
                 await getWeatherDataByCoordinates(latitude, longitude);
             } catch (error) {
-                showAlert(`Não foi possível obter sua localização. Por favor, insira o nome da cidade.
-                <img src="src/img/sad_face.png"/>`
+                showAlert(`Você não permitiu o acesso a sua localização, digite o nome do local ou permita.
+                <img src="src/img/sad_emoji.webp"/>`
             );
             }
         } else {
-            showAlert('Acesso à localização negado. Por favor, insira o nome da cidade.');
+            showAlert(`Acesso à localização negado. Por favor, insira o nome da local.
+            <img src="src/img/thinking_emoji.png"/>
+            `);
         }
     });
 
@@ -188,7 +191,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (cityName) {
             await getWeatherDataByCityName(cityName);
         } else {
-            showAlert('Por favor, insira o nome da cidade.');
+            showAlert(`Por favor, insira o nome da local.
+            <img src="src/img/happy_emoji.png"/>
+            `);
         }
     });
 });
