@@ -81,7 +81,12 @@ body {
     background: linear-gradient(180deg, #5a7cdc 0%, #0e87f1 100%);
     border-radius: 20px;
     padding: 20px;
+    color: white;
+    font-weight: bold;
+    
 }
+
+
 
 #temp_img{
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0))
