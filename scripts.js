@@ -11,7 +11,7 @@ async function getLocationPermission() {
                 resolve(permissionStatus.state === 'granted' || permissionStatus.state === 'prompt');
             });
         } else {
-            resolve(true); 
+            resolve(true);
         }
     });
 }
@@ -20,7 +20,7 @@ async function getLocationPermission() {
 async function getWeatherDataByCoordinates(latitude, longitude) {
     const apiKey = '8a60b2de14f7a17c7a11706b2cfcd87c';
     const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=pt_br`;
-    await fetchWeatherData(apiURL, latitude, longitude); 
+    await fetchWeatherData(apiURL, latitude, longitude);
 }
 
 // Função para obter dados do clima por nome da local
@@ -30,19 +30,34 @@ async function getWeatherDataByCityName(cityName) {
     await fetchWeatherData(apiURL);
 }
 
+async function getTimeByCoordinates(latitude, longitude) {
+    const apiKey = 'H6032VIT34E2';
+    const apiURL = `https://api.timezonedb.com/v2.1/get-time-zone?key=${apiKey}&format=json&by=position&lat=${latitude}&lng=${longitude}`;
+    try {
+        const response = await fetch(apiURL);
+        const data = await response.json();
+        return data.formatted || "Não encontrado";
+    } catch (error) {
+        throw new Error("Erro ao obter o horário do local.");
+    }
+}
+
 // Função para buscar dados do clima na API
 async function fetchWeatherData(apiURL) {
     try {
         document.getElementById('loading').style.display = 'block';
         const response = await fetch(apiURL);
         const json = await response.json();
+
         const city = await getCityByCoordinates(json.coord.lat, json.coord.lon)
         const state = await getStateByCoordinates(json.coord.lat, json.coord.lon); 
         const suburb = await getSuburbByCoordinates(json.coord.lat, json.coord.lon);
         const rua = await getRuaByCoordinates(json.coord.lat, json.coord.lon)
+        const time = await getTimeByCoordinates(json.coord.lat, json.coord.lon); 
         json.city = city
         json.suburb = suburb; 
         json.rua = rua;
+        json.time = time
         if (!state) {
             json.state = json.city;
         } else {
@@ -65,9 +80,11 @@ async function fetchWeatherData(apiURL) {
                 windDirection: json.wind.deg,
                 state: json.state,
                 suburb: json.suburb,
-                rua: json.rua
+                rua: json.rua,
+                time: json.time
             });
             console.log(json)
+
         } else {
             showAlert(`Não foi possível localizar. Verifique se o nome da local está correto.
             <img src="src/img/thinking_emoji.png"/>`);
@@ -79,12 +96,16 @@ async function fetchWeatherData(apiURL) {
         document.getElementById('loading').style.display = 'none';
     }
     console.log(showInfo())
+
+    // Resetar json.time para null
+    json.time = null;
 }
+
 
 // Função para obter o estado por coordenadas
 async function getStateByCoordinates(latitude, longitude) {
     const nominatimURL = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-    
+
     try {
         const response = await fetch(nominatimURL);
         const data = await response.json();
@@ -152,6 +173,8 @@ function showAlert(msg) {
     document.querySelector('#alert').innerHTML = msg
 }
 
+let intervalId;
+
 // Função para exibir informações do clima
 async function showInfo(json) {
     showAlert('')
@@ -163,7 +186,24 @@ async function showInfo(json) {
     document.querySelector('#rua').innerHTML = `${json.rua}`
 
 
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
 
+
+    const localTimeElement = document.querySelector('#local_time');
+
+    function updateLocalTime() {
+        const localDate = new Date(json.time); 
+        localDate.setSeconds(localDate.getSeconds() + 1); 
+        const formattedLocalTime = getFormattedDateTime(localDate);
+        localTimeElement.innerHTML = formattedLocalTime; 
+        json.time = localDate.toISOString(); 
+    }
+
+    
+    intervalId = setInterval(updateLocalTime, 1000);
+    
     const countryImg = document.querySelector("#country");
     if (countryImg) {
         const countryFlagUrl = `${apiCountryURL}${json.country}/flat/64.png`;
@@ -185,8 +225,20 @@ async function showInfo(json) {
     const windDirection = getWindDirection(json.windDirection);
     document.querySelector('#wind_direction').innerHTML = windDirection;
     document.querySelector('#thermal_sensation').innerHTML = `${json.thermalSensation}`
+    //document.querySelector('#local_time').innerHTML = `${json.time}`
 
     updateTempBackground(json.temp);
+}
+
+// Função para obter a data e hora formatada
+function getFormattedDateTime(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 // Função para analisar o nome da local e o estado
@@ -232,9 +284,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const { latitude, longitude } = position.coords;
                 await getWeatherDataByCoordinates(latitude, longitude);
             } catch (error) {
-                showAlert(`Você não permitiu o acesso a sua localização, digite o nome do local ou permita.
-                <img src="src/img/sad_emoji.webp"/>`
-            );
+                showAlert(`Você não permitiu o acesso a sua localização, digite o nome do local ou atualize a página e permita.
+                <img src="src/img/sad_emoji.png"/>`
+                );
             }
         } else {
             showAlert(`Acesso à localização negado. Por favor, insira o nome da local.
