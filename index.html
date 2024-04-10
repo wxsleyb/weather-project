@@ -25,112 +25,137 @@
 
             <div id="weather" class="">
 
-                <h1 id="title">
-                    Nova Iguaçu, BR</h1>
-                <h1 id="title">
-                    <img id="country" src="https://flagsapi.com/BE/flat/64.png" alt="Bandeira do País">
-                </h1>
-                <h1 id="state">Rio de Janeiro</h1>
-                <h1 id="suburb"></h1>
-                <h1 id="rua"></h1>
                 <div id="infos">
-                    <div id="temp">
-                        <img id="temp_img" src="http://openweathermap.org/img/wn/04d.png" alt="">
-                        <div>
-                            <p id="temp_value">
-                                32 <sup>°C</sup>
-                            </p>
-                            <p id="temp_description">
-                                Ensolarado
-                            </p>
+                    <img id="country" src="https://flagsapi.com/BE/flat/64.png" alt="Bandeira do País">
+                    <div id="other_infos_local">
+                        <div class="info">
+                            <i id="local_icon" class="fa-solid fa-map-location-dot"></i>
+                            <div>
+                                <h2>Local</h2>
+                                <p id="local">Nova Iguaçu, BR</p>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <i id="state_icon" class="fa-solid fa-building"></i>
+                            <div>
+                                <h2>Estado</h2>
+                                <p id="state">Rio de Janeiro</p>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <i id="suburb_icon" class="fa-solid fa-city"></i>
+                            <div>
+                                <h2>Subúrbio</h2>
+                                <p id="suburb"></p>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <i id="rua_icon" class="fa-solid fa-road"></i>
+                            <div>
+                                <h2>Rua</h2>
+                                <p id="rua"></p>
+                            </div>
                         </div>
                     </div>
-                    <div id="other_infos">
-                        <div class="info">
-                            <i id="temp_min_icon" class="fa-solid fa-temperature-low"></i>
-
+                    </h1>
+                    <div id="infos">
+                        <div id="temp">
+                            <img id="temp_img" src="http://openweathermap.org/img/wn/04d@2x.png" alt="">
                             <div>
-                                <h2>Temp. Min</h2>
-                                <p id="temp_min">
-                                    12 <sup>°C</sup>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="info">
-                            <i id="temp_max_icon" class="fa-solid fa-temperature-high"></i>
-
-                            <div>
-                                <h2>Temp. Max</h2>
-                                <p id="temp_max">
+                                <p id="temp_value">
                                     32 <sup>°C</sup>
                                 </p>
-                            </div>
-                        </div>
-                        <div class="info">
-                            <i id="humidity_icon" class="fa-solid fa-droplet"></i>
-                            <div>
-                                <h2>Umidade</h2>
-                                <p id="humidity">
-                                    12%
+                                <p id="temp_description">
+                                    Ensolarado
                                 </p>
                             </div>
                         </div>
-                        <div class="info">
-                            <i id="thermal_sensation_icon" class="fa-solid fa-temperature-three-quarters"></i>
-                            <div>
-                                <h2>Sensação Térmica</h2>
-                                <p id="thermal_sensation">
-                                    34 <sup>°C</sup>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="info">
-                            <i id="wind_icon" class="fa-solid fa-wind"></i>
+                        <div id="other_infos">
+                            <div class="info">
+                                <i id="temp_min_icon" class="fa-solid fa-temperature-low"></i>
 
-                            <div>
-                                <h2>Vento</h2>
-                                <p id="wind">
-                                    20 km/h
-                                </p>
+                                <div>
+                                    <h2>Temp. Min</h2>
+                                    <p id="temp_min">
+                                        12 <sup>°C</sup>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="info">
-                            <i id="wind_direction_icon" class="fa-solid fa-location-arrow"></i>
+                            <div class="info">
+                                <i id="temp_max_icon" class="fa-solid fa-temperature-high"></i>
 
-                            <div>
-                                <h2>Direção do Vento</h2>
-                                <p id="wind_direction">
-                                    N
-                                </p>
+                                <div>
+                                    <h2>Temp. Max</h2>
+                                    <p id="temp_max">
+                                        32 <sup>°C</sup>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="info">
-                            <i id="latitude_icon" class="fa-solid fa-earth-europe"></i>
-
-                            <div>
-                                <h2>Latitude</h2>
-                                <p id="latitude">
-                                    -23.9210°
-                                </p>
+                            <div class="info">
+                                <i id="humidity_icon" class="fa-solid fa-droplet"></i>
+                                <div>
+                                    <h2>Umidade</h2>
+                                    <p id="humidity">
+                                        12%
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="info">
-                            <i id="longitude_icon" class="fa-solid fa-earth-africa"></i>
+                            <div class="info">
+                                <i id="thermal_sensation_icon" class="fa-solid fa-temperature-three-quarters"></i>
+                                <div>
+                                    <h2>Sensação Térmica</h2>
+                                    <p id="thermal_sensation">
+                                        34 <sup>°C</sup>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <i id="wind_icon" class="fa-solid fa-wind"></i>
 
-                            <div>
-                                <h2>Longitude</h2>
-                                <p id="longitude">
-                                    -44,2393°
-                                </p>
+                                <div>
+                                    <h2>Vento</h2>
+                                    <p id="wind">
+                                        20 km/h
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <i id="wind_direction_icon" class="fa-solid fa-location-arrow"></i>
+
+                                <div>
+                                    <h2>Direção do Vento</h2>
+                                    <p id="wind_direction">
+                                        N
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <i id="latitude_icon" class="fa-solid fa-earth-europe"></i>
+
+                                <div>
+                                    <h2>Latitude</h2>
+                                    <p id="latitude">
+                                        -23.9210°
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <i id="longitude_icon" class="fa-solid fa-earth-africa"></i>
+
+                                <div>
+                                    <h2>Longitude</h2>
+                                    <p id="longitude">
+                                        -44,2393°
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="alert"></div>
+                <div id="loading">Carregando...</div>
             </div>
-            <div id="alert"></div>
-            <div id="loading">Carregando...</div>
         </div>
-    </div>
 
 </body>
 
