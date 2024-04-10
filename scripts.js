@@ -156,10 +156,11 @@ function showAlert(msg) {
 async function showInfo(json) {
     showAlert('')
     document.querySelector('#weather').classList.add('show')
-    document.querySelector('#title').innerHTML = `Local: ${json.city}, ${json.country}`
-    document.querySelector('#state').innerHTML = `Estado: ${json.state}`
-    document.querySelector('#suburb').innerHTML = `Subúrbio: ${json.suburb}`
-    document.querySelector('#rua').innerHTML = `Rua: ${json.rua}`
+    document.querySelector('#local').innerHTML = `${json.city}`
+    document.querySelector('#country').innerHTML = `${json.country}`
+    document.querySelector('#state').innerHTML = `${json.state}`
+    document.querySelector('#suburb').innerHTML = `${json.suburb}`
+    document.querySelector('#rua').innerHTML = `${json.rua}`
 
 
 
@@ -196,7 +197,7 @@ function parseCityAndState(cityNameAndState) {
 
 // Função para obter a direção do vento
 function getWindDirection(degrees) {
-    const directions = ['N', 'NE', 'L', 'SE', 'S', 'SO', 'O', 'NO'];
+    const directions = ['Norte', 'Nordeste', 'Leste', 'Sudeste', 'Sul', 'Sudoeste', 'Oeste', 'Noroeste'];
     const index = Math.round(degrees / 45) % 8;
     return directions[index];
 }
