@@ -86,12 +86,12 @@ async function fetchWeatherData(apiURL) {
             console.log(json)
 
         } else {
-            showAlert(`Não foi possível localizar. Verifique se o nome da local está correto.
-            <img src="src/img/thinking_emoji.png"/>`);
+            // showAlert(`Não foi possível localizar. Verifique se o nome da local está correto.
+            // <img src="src/img/thinking_emoji.png"/>`);
         }
     } catch (error) {
-        showAlert(`Ocorreu um erro ao buscar os dados do clima, digite um local válido.
-        <img src="src/img/thinking_emoji.png"/>`);
+        // showAlert(`Ocorreu um erro ao buscar os dados do clima, digite um local válido.
+        // <img src="src/img/thinking_emoji.png"/>`);
     } finally {
         document.getElementById('loading').style.display = 'none';
     }
@@ -274,7 +274,6 @@ function updateTempBackground(temp) {
 
 // Evento que é disparado quando o conteúdo do DOM é completamente carregado
 document.addEventListener('DOMContentLoaded', async () => {
-    // Adiciona um ouvinte de evento para o botão 'use_location'
     const useLocationButton = document.getElementById('use_location');
     useLocationButton.addEventListener('click', async () => {
         const permissionGranted = await getLocationPermission();
@@ -284,14 +283,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const { latitude, longitude } = position.coords;
                 await getWeatherDataByCoordinates(latitude, longitude);
             } catch (error) {
-                showAlert(`Você não permitiu o acesso a sua localização, digite o nome do local ou atualize a página e permita.
-                <img src="src/img/sad_emoji.png"/>`
-                );
+                // showAlert(`Você não permitiu o acesso a sua localização, digite o nome do local ou atualize a página e permita.
+                // <img src="src/img/sad_emoji.png"/>`
+                // );
             }
         } else {
-            showAlert(`Acesso à localização negado. Por favor, insira o nome da local.
-            <img src="src/img/thinking_emoji.png"/>
-            `);
+            // showAlert(`Acesso à localização negado. Por favor, insira o nome da local.
+            // <img src="src/img/thinking_emoji.png"/>
+            // `);
         }
     });
 
@@ -303,9 +302,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (cityName) {
             await getWeatherDataByCityName(cityName);
         } else {
-            showAlert(`Por favor, insira o nome do local.
-            <img src="src/img/happy_emoji.png"/>
-            `);
+            // showAlert(`Por favor, insira o nome do local.
+            // <img src="src/img/happy_emoji.png"/>
+            // `);
         }
     });
 });
